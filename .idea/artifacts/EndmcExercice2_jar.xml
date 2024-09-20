@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="EndmcExercice2:jar">
+    <output-path>$PROJECT_DIR$/../../../hautserveur/plugins</output-path>
+    <root id="archive" name="EndmcExercice2.jar">
+      <element id="module-output" name="EndmcExercice2.main" />
+      <element id="library" level="project" name="Gradle: com.mojang:authlib:3.11.50" />
+      <element id="dir-copy" path="$USER_HOME$/.gradle/caches/8.5/kotlin-dsl/accessors/cfd3b7cd9de39208941ac856e88771e9/classes" />
+      <element id="dir-copy" path="$USER_HOME$/.gradle/caches/8.5/kotlin-dsl/accessors/88f21b562c7d422f7231428dbdb6eb94-PS/classes" />
+      <element id="library" level="project" name="Gradle: dev.folia:folia-api:1.12.2-R0.1-SNAPSHOT" />
+    </root>
+  </artifact>
+</component>

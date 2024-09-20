@@ -1,0 +1,11 @@
+name: SpecialItems
+author: Kairo
+main: fr.kairo.items.SpecialItems
+description: Exercice pour la seconde étoile de Endmc, TP réalisée par Yanis
+version: 1.0.0
+api-version: 1.12.2
+commands:
+  givespecialitem:
+    description: Give un special item a un joueur
+    permission: specialitems.giveitem
+    permission-message: Vous ne possédez pas la permission pour utiliser cette commande !
