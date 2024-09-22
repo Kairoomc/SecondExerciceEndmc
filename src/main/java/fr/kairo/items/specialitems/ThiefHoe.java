@@ -1,76 +1,34 @@
 package fr.kairo.items.specialitems;
 
-import fr.kairo.items.CustomItems;
-import fr.kairo.items.SpecialItems;
-import fr.kairo.items.manager.ItemManager;
-import fr.kairo.items.utils.PlayerCooldown;
+import fr.kairo.items.CustomItem;
+import fr.kairo.items.ItemBehavior;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.scheduler.BukkitRunnable;
 
-public class ThiefHoe extends CustomItems {
-
-    private final SpecialItems plugin;
-
+public class ThiefHoe extends CustomItem implements ItemBehavior {
     private long lastUsed = 0;
 
-
-    public ThiefHoe(SpecialItems plugin) {
-        this.plugin = plugin;
+    public ThiefHoe() {
+        super(new ItemStack(Material.DIAMOND_HOE));
     }
 
     @Override
-    public void giveItem(Player player) {
-        ItemStack hoe = new ItemStack(Material.DIAMOND_HOE);
-        hoe = setItemNBT(hoe);
-        getItemMeta(hoe);
-        player.getInventory().addItem(hoe);
+    public void onBlockBreak(Player player) {
     }
 
     @Override
-    public void onRightClick(PlayerInteractEvent event) {
-        Player player = event.getPlayer();
-        long currentTime = System.currentTimeMillis();
-        PlayerCooldown playerCooldown = new PlayerCooldown(plugin, "houe");
-        if (player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equalsIgnoreCase("ThifHoe")) {
-        if (playerCooldown.isOnCooldown(player)) {
-            lastUsed = currentTime;
+    public void onEntityHit(Player player) {
+    }
 
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    player.sendMessage("Le joueur le plus riche est à proximité !");
-                }
-            }.runTaskLater(plugin, 0L);
-            playerCooldown.setCooldown(player, 10);
+    @Override
+    public void onRightClick(Player player) {
+        long cooldown = 600000; // 10 minutes en millisecondes
+        if ((System.currentTimeMillis() - lastUsed) >= cooldown) {
+            lastUsed = System.currentTimeMillis();
         } else {
-            player.sendMessage("Houe du voleur encore en cooldown " + playerCooldown.getRemainingTime(player, false));
+            player.sendMessage("La houe est en cooldown. Veuillez patienter.");
         }
-
-        }
-
-
-    }
-
-    @Override
-    public ItemStack setItemNBT(ItemStack item) {
-
-        return item;
-    }
-
-    public ItemMeta getItemMeta(ItemStack item) {
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName("ThifHoe");
-        item.setItemMeta(meta);
-        return meta;
-    }
-
-    @Override
-    public void loadItemNBT(ItemStack item) {
-
     }
 }
-

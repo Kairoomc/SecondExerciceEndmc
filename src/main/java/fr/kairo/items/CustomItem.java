@@ -13,18 +13,20 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
-public abstract class CustomItems {
+public abstract class CustomItem {
+        protected ItemStack item;
 
-        public abstract void giveItem(Player player);
+        public CustomItem(ItemStack item) {
+                this.item = item;
+        }
 
-        public void onBlockBreak(BlockBreakEvent event) {}
+        public abstract void onBlockBreak(Player player);
 
-        public void onRightClick(PlayerInteractEvent event) {}
+        public abstract void onEntityHit(Player player);
 
-        public void onEntityHit(EntityDamageByEntityEvent event) {}
+        public abstract void onRightClick(Player player);
 
-        public abstract ItemStack setItemNBT(ItemStack item);
-
-        public abstract void loadItemNBT(ItemStack item);
-
+        public ItemStack getItem() {
+                return item;
+        }
 }

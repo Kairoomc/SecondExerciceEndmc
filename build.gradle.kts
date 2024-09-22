@@ -5,19 +5,21 @@ plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
+
 group = "fr.kairo.items"
 version = "1.0"
 
 repositories {
-    mavenLocal()
-    mavenCentral()
-    maven("https://jitpack.io")
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
+    maven("https://repo.papermc.io/repository/maven-public/")
+    maven("https://jitpack.io")
 }
 
 dependencies {
-    compileOnly("org.spigotmc:spigot:1.12.2-R0.1-SNAPSHOT")
+    compileOnly(files("spigot-1.12.2.jar"))
 }
+
+
 
 java {
     toolchain {
@@ -25,7 +27,5 @@ java {
     }
 }
 
-tasks.withType<ShadowJar> {
-    archiveClassifier.set("")
-    configurations = listOf(project.configurations.runtimeClasspath.get())
-}
+
+

@@ -1,45 +1,33 @@
 package fr.kairo.items.specialitems;
 
-import fr.kairo.items.CustomItems;
+import fr.kairo.items.CustomItem;
+import fr.kairo.items.ItemBehavior;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class HeroSword extends CustomItems {
+public class HeroSword extends CustomItem implements ItemBehavior {
+    private Player owner = null;
 
-    private String ownerUUID = null;
-
-    @Override
-    public void giveItem(Player player) {
-        ItemStack sword = new ItemStack(Material.DIAMOND_SWORD);
-        sword = setItemNBT(sword);
-        player.getInventory().addItem(sword);
+    public HeroSword() {
+        super(new ItemStack(Material.DIAMOND_SWORD));
     }
 
     @Override
-    public void onEntityHit(EntityDamageByEntityEvent event) {
-        Player attacker = (Player) event.getDamager();
-        ItemStack itemInHand = attacker.getInventory().getItemInMainHand();
+    public void onBlockBreak(Player player) {
+    }
 
-        if (itemInHand.getType() == Material.DIAMOND_SWORD) {
-            if (ownerUUID == null) {
-                ownerUUID = attacker.getUniqueId().toString();
-                setItemNBT(itemInHand);
-            } else if (!attacker.getUniqueId().toString().equals(ownerUUID)) {
-                event.setCancelled(true);
-                attacker.sendMessage("§cVous n'êtes pas le propriétaire de cette épée !");
-            }
+    @Override
+    public void onEntityHit(Player player) {
+        if (owner == null) {
+            owner = player;
+        } else if (!owner.equals(player)) {
+            player.sendMessage("Seul le joueur " + owner.getName() + " peut utiliser cette épée !");
         }
     }
 
     @Override
-    public ItemStack setItemNBT(ItemStack item) {
-        return item;
-    }
-
-    @Override
-    public void loadItemNBT(ItemStack item) {
+    public void onRightClick(Player player) {
     }
 }
-
